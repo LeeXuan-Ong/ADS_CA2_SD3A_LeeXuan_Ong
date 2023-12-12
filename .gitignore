@@ -1,32 +1,32 @@
-# Prerequisites
-*.d
+# Visual Studio specific
+.vs/
+*.suo
+*.user
+*.sdf
+*.opensdf
+*.sln.docstates
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
+# User-specific files
+*.user
+
+# Build output
+Debug/
+Release/
+*.exe
+*.dll
+*.lib
 *.obj
-
-# Precompiled Headers
-*.gch
+*.pdb
+*.ilk
 *.pch
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+# Generated files
+*.aps
+*.ncb
 
-# Fortran module files
-*.mod
-*.smod
+# Operating System files
+Thumbs.db
+ehthumbs.db
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
+# Editor-specific files
+.editorconfig
