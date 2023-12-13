@@ -9,10 +9,10 @@ namespace ADSCA2TEST
 	TEST_CLASS(ADSCA2TEST)
 	{
 	public:
+		string fileName = "test.xml";
 
 		TEST_METHOD(TestLoadXMLAndValidate)
 		{
-			string fileName = "test.xml";
 			FileManager<MyItem> engine;
 			engine.setFileName(fileName);
 			Assert::IsTrue(engine.loadAndValidateXML());
@@ -20,34 +20,50 @@ namespace ADSCA2TEST
 
 		TEST_METHOD(TestLoadToTree)
 		{
-			string fileName = "test.xml";
 			FileManager<MyItem> engine;
 			engine.setFileName(fileName);
+			engine.loadToTree(); 
 			Assert::AreNotEqual(engine.getCountTree(), 0);
-			//Assert::AreEqual(engine.getCountTree() > 0)
+			// Add more assertions based on the expected structure of your tree
 		}
 
-		TEST_METHOD(TestLoadToTreeAndSearch)
+
+		TEST_METHOD(TestToFindFile)
 		{
-		//	string fileName = "test.xml";
-		//	FileManager<MyItem> engine;
-		//	engine.setFileName(fileName);
-		//	Assert::AreNotEqual(engine.getCountTree(), 0);
-		//	//Assert::AreEqual(engine.getCountTree() > 0)
-		//	Assert::IsTrue(engine.findFile("1));
+			FileManager<MyItem> engine(fileName);
+			engine.loadToTree();
+			
+			vector<string> result = engine.findFile("config");
+			Assert::IsTrue(result.size() > 0);
 		}
 
-		TEST_METHOD(TestToDisplayCurrentDirectoryFiles) {
-			string fileName = "test.xml";
-			FileManager<MyItem> engine;
-			engine.setFileName(fileName);
-			Assert::AreNotEqual(engine.getCountTree(), 0);
-			TreeIterator<MyItem> iterator (engine.getTree());
-			iterator.down();
-			vector<MyItem> vector1 = engine.returnCurrentDirectory(iterator);
-			int size = vector1.size();
-			Assert::AreNotEqual(size, 0);
+		TEST_METHOD(TestPruneEmptyFolders)
+		{
+			
+			FileManager<MyItem> engine(fileName);
+			Tree<MyItem>* tree = engine.getTree();
+			engine.loadToTree();
+			engine.toPruneFolders();
+
 		}
+
+		TEST_METHOD(TestReturnFolderContent) {
+			FileManager<MyItem> engine(fileName);
+			engine.loadToTree();
+			vector<MyItem> results = engine.toPrinTheWholeDirectory("Debug");
+			Assert::IsTrue(results.size() > 0);
+		}
+
+		TEST_METHOD(TestCalculateSize)
+		{
+			FileManager<MyItem> engine(fileName);
+			engine.loadToTree();
+			int expected = 2966521;
+			Tree<MyItem>* tree = engine.getTree();
+			Assert::AreEqual(engine.calculateSize(tree), expected);
+		}
+
+
 
 	};
 }
