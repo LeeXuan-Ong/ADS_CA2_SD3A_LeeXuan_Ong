@@ -10,11 +10,11 @@
 template <class T>
 class DListIterator
 {
-public:
-	DListNode<T>* currentNode;
-	DList<T>* list;
+public: 
+	DListNode<T> *currentNode;
+	DList<T> *list;
 
-	DListIterator(DList<T>* l = nullptr, DListNode<T>* node = nullptr);
+	DListIterator(DList<T> *l = nullptr, DListNode<T> *node = nullptr);
 	void start();
 	void end();
 	void advance();
@@ -23,10 +23,11 @@ public:
 	bool isValid();
 	bool isEnd();
 	bool isStart();
+
 };
 
 template <class T>
-DListIterator<T>::DListIterator(DList<T>* l, DListNode<T>* n)
+DListIterator<T>::DListIterator(DList<T> *l, DListNode<T> *n)
 {
 	list = l;
 	currentNode = n;

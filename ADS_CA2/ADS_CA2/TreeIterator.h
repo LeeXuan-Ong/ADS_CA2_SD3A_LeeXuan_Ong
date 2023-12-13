@@ -4,8 +4,8 @@
 template <class T>
 class TreeIterator
 {
-public:
-	Tree<T>* node;
+public:	
+	Tree<T> *node;
 	DListIterator<Tree<T>*> childIter;
 
 	TreeIterator(Tree<T>* root);
@@ -24,7 +24,8 @@ public:
 	void removeChild();
 	bool childValid();
 	T childItem();
-	T item();
+	T& item();
+
 };
 template <class T>
 TreeIterator<T>::TreeIterator(Tree<T>* root)
@@ -36,10 +37,12 @@ TreeIterator<T>::TreeIterator(Tree<T>* root)
 template <class T>
 void TreeIterator<T>::resetIterator()
 {
-	if (node != nullptr) {
+	if (node != nullptr)
+	{
 		childIter = node->children->getIterator();
 	}
-	else {
+	else
+	{
 		childIter = nullptr;
 	}
 }
@@ -47,7 +50,8 @@ void TreeIterator<T>::resetIterator()
 template <class T>
 void TreeIterator<T>::root()
 {
-	if (node->parent != nullptr) {
+	if (node->parent != nullptr)
+	{
 		node = node->parent;
 	}
 	resetIterator();
@@ -56,27 +60,30 @@ void TreeIterator<T>::root()
 template <class T>
 void TreeIterator<T>::up()
 {
-	if (childIter.isValid()) {
+	if (node->parent != nullptr)
+	{
 		node = node->parent;
-		resetIterator();
+		
 	}
-
+	resetIterator();
 }
 
 template <class T>
 void TreeIterator<T>::down()
 {
-	if (childIter.isValid()) {
-		node = childIter.currentNode->data;
-		resetIterator();
+	if (childIter.isValid())
+	{
+		node = childIter.item();
+		
 	}
-
+	resetIterator();
 }
 
 template <class T>
 void TreeIterator<T>::childBack()
 {
-	if (childIter.isValid()) {
+	if (childIter.isValid())
+	{
 		childIter.previous();
 	}
 }
@@ -84,7 +91,8 @@ void TreeIterator<T>::childBack()
 template <class T>
 void TreeIterator<T>::childForth()
 {
-	if (childIter.isValid()) {
+	if (childIter.isValid())
+	{
 		childIter.advance();
 	}
 }
@@ -92,7 +100,8 @@ void TreeIterator<T>::childForth()
 template <class T>
 void TreeIterator<T>::childStart()
 {
-	if (childIter.isValid()) {
+	if (childIter.isValid())
+	{
 		childIter.start();
 	}
 }
@@ -100,7 +109,8 @@ void TreeIterator<T>::childStart()
 template <class T>
 void TreeIterator<T>::childEnd()
 {
-	if (childIter.isValid()) {
+	if (childIter.isValid())
+	{
 		childIter.end();
 	}
 }
@@ -118,37 +128,37 @@ template <class T>
 void TreeIterator<T>::prependChild(T item)
 {
 	Tree<T>* temp = new Tree<T>(item);
-	node->parent = temp;
-	temp->children->append(temp);
+	temp->parent = node;
+	node->children->prepend(temp);
 	resetIterator();
 }
 
 template <class T>
 void TreeIterator<T>::insertChildBefore(T item)
 {
-	Tree<T>* temp = new Tree<T>(item);
+	Tree<T> *temp = new Tree<T>(item);
 	temp->parent = node;
 	node->children->insert(childIter, temp);
-
-
+	
 }
 
 template <class T>
 void TreeIterator<T>::insertChildAfter(T item)
 {
-	Tree<T>* temp = new Tree<T>(item);
-	temp->parent = node;
-	childIter.currentNode->insertAfter(temp);
 
+	Tree<T> *temp = new Tree<T>(item);
+	temp->parent = node;
+	childIter.advance();
+	node->children->insert(childIter, temp);
+	childIter.previous();
+	childIter.previous();
 
 }
 
 template <class T>
 void TreeIterator<T>::removeChild()
 {
-	if (childIter.isValid()) {
-		node->children->remove(childIter);
-	}
+	childIter = node->children->remove(childIter);
 }
 
 template <class T>
@@ -160,11 +170,11 @@ bool TreeIterator<T>::childValid()
 template <class T>
 T TreeIterator<T>::childItem()
 {
-	return childIter->node->data;
+	return childIter.currentNode->data;
 }
 
 template <class T>
-T TreeIterator<T>::item()
+T& TreeIterator<T>::item()
 {
 	return node->data;
 }

@@ -5,11 +5,11 @@ class DListNode
 {
 public:
 	T data;
-	DListNode<T>* next;
-	DListNode<T>* previous;
+	DListNode<T> *next;
+	DListNode<T> *previous;
 
 	DListNode(T item);
-	DListNode(DListNode<T>& item);
+	DListNode(DListNode<T> &item);
 	void insertBefore(T item);
 	void insertAfter(T item);
 
@@ -22,7 +22,7 @@ public:
 
 
 template <class T>
-DListNode<T>::DListNode(DListNode<T>& node)
+DListNode<T>::DListNode(DListNode<T> &node)
 {
 	this->data = new DListNode(node->data);
 }
@@ -36,7 +36,7 @@ DListNode<T>::DListNode(T item)
 template <class T>
 void DListNode<T>::insertAfter(T item)
 {
-	DListNode<T>* temp = new DListNode(item);
+	DListNode<T> *temp = new DListNode(item);
 	temp->previous = this;
 	temp->next = this->next;
 	if (this->next != nullptr)
@@ -51,7 +51,7 @@ void DListNode<T>::insertAfter(T item)
 template <class T>
 void DListNode<T>::insertBefore(T item)
 {
-	DListNode<T>* temp = new DListNode(item);
+	DListNode<T> *temp = new DListNode(item);
 	temp->next = this;
 	temp->previous = this->previous;
 	if (this->previous != nullptr)

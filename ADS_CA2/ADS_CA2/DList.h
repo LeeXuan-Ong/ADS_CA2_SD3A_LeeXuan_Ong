@@ -8,28 +8,28 @@ template <class T>
 class DList
 {
 public:
-	DListNode<T>* head, * tail;
+	DListNode<T> *head, *tail;
 	int count;
 
 	DList();
-	DList(DList<T>& list);
+	DList(DList<T> &list);
 	void append(T item);
 	void prepend(T item);
 	void removeHead();
 	void removeTail();
 	DListIterator<T> getIterator();
-	void insert(DListIterator<T>& iter, T item);
-	DListIterator<T> remove(DListIterator<T>& iter);
+	void insert(DListIterator<T> &iter, T item);
+	DListIterator<T> remove(DListIterator<T> &iter);
 	int size();
 	~DList();
 };
 
 template <class T>
-DList<T>::DList(DList<T>& list)
+DList<T>::DList(DList<T> &list)
 {
 	head = nullptr;
 	tail = nullptr;
-	DListNode<T>* current;
+	DListNode<T> *current;
 	current = list.head;
 	while (current != nullptr)
 	{
@@ -59,7 +59,7 @@ void DList<T>::append(T item)
 	{
 		tail->insertAfter(item);
 		tail = tail->next;
-
+		
 	}
 	count++;
 }
@@ -70,14 +70,14 @@ void DList<T>::prepend(T item)
 	if (head == nullptr)
 	{
 		head = tail = new DListNode<T>(item);
-
-
+		
+		
 	}
 	else
 	{
 		head->insertBefore(item);
 		head = head->previous;
-
+		
 	}
 	count++;
 }
@@ -102,7 +102,7 @@ void DList<T>::removeHead()
 		head->previous = nullptr;
 		delete temp;
 		temp = nullptr;
-
+		
 		count--;
 	}
 }
@@ -122,12 +122,12 @@ void DList<T>::removeTail()
 	}
 	else
 	{
-		DListNode<T>* temp = tail;
+		DListNode<T> *temp = tail;
 		tail = tail->previous;
 		tail->next = nullptr;
 		delete temp;
 		temp = nullptr;
-
+		
 		count--;
 	}
 }
@@ -137,7 +137,7 @@ DListIterator<T> DList<T>::getIterator()
 	return DListIterator<T>(this, head);
 }
 template <class T>
-void DList<T>::insert(DListIterator<T>& iter, T item)
+void DList<T>::insert(DListIterator<T> &iter, T item)
 {
 	if (iter.list != this || !iter.isValid())
 	{
@@ -155,7 +155,7 @@ void DList<T>::insert(DListIterator<T>& iter, T item)
 }
 
 template <class T>
-DListIterator<T> DList<T>::remove(DListIterator<T>& iter)
+DListIterator<T> DList<T>::remove(DListIterator<T> &iter)
 {
 	if (iter.list != this || !iter.isValid())
 	{
@@ -170,7 +170,7 @@ DListIterator<T> DList<T>::remove(DListIterator<T>& iter)
 	else
 	{
 		/*DListIterator<T> previousNodeIter(this, iter.currentNode->previous);
-
+	
 		if (iter.currentNode == tail)
 		{
 			tail = previousNodeIter.currentNode;
@@ -181,7 +181,7 @@ DListIterator<T> DList<T>::remove(DListIterator<T>& iter)
 			iter.currentNode->next->previous = previousNodeIter.currentNode;
 		}*/
 
-		DListNode<T>* prev = iter.currentNode->previous;
+		DListNode<T>*prev = iter.currentNode->previous;
 		if (iter.currentNode == tail)
 		{
 			tail = prev;
@@ -195,20 +195,20 @@ DListIterator<T> DList<T>::remove(DListIterator<T>& iter)
 		count--;
 		return DListIterator<T>(this, prev->next);
 	}
-
+	
 }
 
 template <class T>
 DList<T>::~DList()
 {
-	DListNode<T>* iter, * next = nullptr;
+	DListNode<T> *iter, *next=nullptr;
 	iter = head;
-	while (iter != nullptr)
+	while(iter != nullptr )
 	{
 		next = iter->next;
 		delete iter;
 		iter = next;
-
+		
 	}
 	head = nullptr;
 	tail = nullptr;
