@@ -37,7 +37,7 @@ public:
     void printMatchingDirectories(Tree<T>* folders, const string& dirToMatch, vector<T>& foundItems);
 
     //void printDirectoryContent(Tree<T>* folders);
-    
+    ~FileManager();
 };
 
 
@@ -446,4 +446,9 @@ void FileManager<T>::printMatchingDirectories(Tree<T>* folders, const string& di
     }
 
     cout << "Search done" << endl;
+}
+template<class T>
+FileManager<T>::~FileManager() {
+    
+    delete tree; 
 }
